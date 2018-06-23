@@ -84,7 +84,7 @@ class Element
             }
         });
 
-        return implode(' ', $attributes);
+        return implode('', $attributes);
     }
 
     /**

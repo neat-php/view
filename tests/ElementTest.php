@@ -28,6 +28,10 @@ class ElementTest extends TestCase
             '<input value="&lt;&gt;&quot;&amp;\'">',
             (string) new Element('input', ['value' => '<>"&\''])
         );
+        $this->assertSame(
+            '<input type="text" required placeholder="Type here...">',
+            (string) new Element('input', ['type' => 'text', 'required', 'placeholder' => 'Type here...'])
+        );
     }
 
     /**
