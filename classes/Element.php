@@ -104,7 +104,13 @@ class Element
      */
     public function content()
     {
-        return $this->escape($this->content);
+        return implode('', array_map(function ($content) {
+            if ($content instanceof Element) {
+                return (string) $content;
+            }
+
+            return $this->escape($content);
+        }, (array) $this->content));
     }
 
     /**
