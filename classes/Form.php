@@ -338,8 +338,15 @@ class Form
 
             $label = $this->option($label, $value, $attributes);
         });
+        if (isset($attributes['placeholder'])) {
+            array_unshift($options, $this->option($attributes['placeholder'], null, array_merge(
+                $selected === null ? ['selected'] : [],
+                ['disabled', 'value', 'style' => 'display: none;']
+            )));
+            unset($attributes['placeholder']);
+        }
 
-        $attributes['name'] = $name;
+        $attributes = array_merge(['name' => $name], $attributes);
 
         return new Element('select', $attributes, $options);
     }
