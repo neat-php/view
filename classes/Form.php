@@ -77,12 +77,12 @@ class Form
      * @param string $type
      * @param string $name
      * @param array  $attributes
-     * @return string
+     * @return Element|string
      */
     public function input(string $type, string $name, array $attributes = [])
     {
         $input = ['type' => $type, 'name' => $name];
-        if (!isset($attributes['value']) && isset($this->values[$name])) {
+        if (!isset($attributes['value']) && isset($this->values[$name]) && !in_array($type, ['file', 'image', 'password'])) {
             $input['value'] = $this->values[$name];
         }
 
@@ -95,7 +95,7 @@ class Form
      * @param string $name
      * @param string $value
      * @param array  $attributes
-     * @return string
+     * @return Element|string
      */
     public function checkbox(string $name, string $value, array $attributes = [])
     {
@@ -113,7 +113,7 @@ class Form
      * @param string $name
      * @param string $value
      * @param array  $attributes
-     * @return string
+     * @return Element|string
      */
     public function radio(string $name, string $value, array $attributes = [])
     {
@@ -130,7 +130,7 @@ class Form
      *
      * @param string $name
      * @param array  $attributes
-     * @return string
+     * @return Element|string
      */
     public function color(string $name, array $attributes = [])
     {
@@ -142,7 +142,7 @@ class Form
      *
      * @param string $name
      * @param array  $attributes
-     * @return string
+     * @return Element|string
      */
     public function date(string $name, array $attributes = [])
     {
@@ -156,7 +156,7 @@ class Form
      *
      * @param string $name
      * @param array  $attributes
-     * @return string
+     * @return Element|string
      */
     public function datetimeLocal(string $name, array $attributes = [])
     {
@@ -168,7 +168,7 @@ class Form
      *
      * @param string $name
      * @param array  $attributes
-     * @return string
+     * @return Element|string
      */
     public function email(string $name, array $attributes = [])
     {
@@ -180,7 +180,7 @@ class Form
      *
      * @param string $name
      * @param array  $attributes
-     * @return string
+     * @return Element|string
      */
     public function file(string $name, array $attributes = [])
     {
@@ -192,7 +192,7 @@ class Form
      *
      * @param string $name
      * @param array  $attributes
-     * @return string
+     * @return Element|string
      */
     public function hidden(string $name, array $attributes = [])
     {
@@ -204,7 +204,7 @@ class Form
      *
      * @param string $name
      * @param array  $attributes
-     * @return string
+     * @return Element|string
      */
     public function image(string $name, array $attributes = [])
     {
@@ -216,7 +216,7 @@ class Form
      *
      * @param string $name
      * @param array  $attributes
-     * @return string
+     * @return Element|string
      */
     public function month(string $name, array $attributes = [])
     {
@@ -230,7 +230,7 @@ class Form
      *
      * @param string $name
      * @param array  $attributes
-     * @return string
+     * @return Element|string
      */
     public function number(string $name, array $attributes = [])
     {
@@ -242,7 +242,7 @@ class Form
      *
      * @param string $name
      * @param array  $attributes
-     * @return string
+     * @return Element|string
      */
     public function password(string $name, array $attributes = [])
     {
@@ -254,7 +254,7 @@ class Form
      *
      * @param string $name
      * @param array  $attributes
-     * @return string
+     * @return Element|string
      */
     public function range(string $name, array $attributes = [])
     {
@@ -266,7 +266,7 @@ class Form
      *
      * @param string $name
      * @param array  $attributes
-     * @return string
+     * @return Element|string
      */
     public function search(string $name, array $attributes = [])
     {
@@ -278,7 +278,7 @@ class Form
      *
      * @param string $name
      * @param array  $attributes
-     * @return string
+     * @return Element|string
      */
     public function tel(string $name, array $attributes = [])
     {
@@ -290,7 +290,7 @@ class Form
      *
      * @param string $name
      * @param array  $attributes
-     * @return string
+     * @return Element|string
      */
     public function text(string $name, array $attributes = [])
     {
@@ -302,7 +302,7 @@ class Form
      *
      * @param string $name
      * @param array  $attributes
-     * @return string
+     * @return Element|string
      */
     public function time(string $name, array $attributes = [])
     {
@@ -316,7 +316,7 @@ class Form
      *
      * @param string $name
      * @param array  $attributes
-     * @return string
+     * @return Element|string
      */
     public function url(string $name, array $attributes = [])
     {
@@ -328,7 +328,7 @@ class Form
      *
      * @param string $name
      * @param array  $attributes
-     * @return string
+     * @return Element|string
      */
     public function week(string $name, array $attributes = [])
     {
@@ -343,7 +343,7 @@ class Form
      * @param string $name
      * @param array  $options
      * @param array  $attributes
-     * @return string
+     * @return Element|string
      */
     public function select(string $name, array $options, array $attributes = [])
     {
@@ -372,12 +372,12 @@ class Form
      * @param string $label
      * @param string $value
      * @param array  $attributes
-     * @return string
+     * @return Element|string
      */
     public function option(string $label = null, string $value = null, array $attributes = [])
     {
         if ($value !== null) {
-            $attributes['value'] = $value;
+            $attributes = array_merge(['value' => $value], $attributes);
         }
 
         return new Element('option', $attributes, $label);
@@ -388,7 +388,7 @@ class Form
      *
      * @param string $name
      * @param array  $attributes
-     * @return string
+     * @return Element|string
      */
     public function textarea(string $name, array $attributes = [])
     {
@@ -402,7 +402,7 @@ class Form
      *
      * @param string $label
      * @param array  $attributes
-     * @return string
+     * @return Element|string
      */
     public function button(string $label, array $attributes = [])
     {
@@ -416,7 +416,7 @@ class Form
      *
      * @param string $label
      * @param array  $attributes
-     * @return string
+     * @return Element|string
      */
     public function reset(string $label, array $attributes = [])
     {
@@ -430,7 +430,7 @@ class Form
      *
      * @param string $label
      * @param array  $attributes
-     * @return string
+     * @return Element|string
      */
     public function submit(string $label, array $attributes = [])
     {
