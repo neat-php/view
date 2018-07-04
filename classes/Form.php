@@ -2,23 +2,38 @@
 
 namespace Neat\View;
 
-use Neat\Http\Input;
-
 class Form
 {
     /**
-     * @var Input
+     * @var array
      */
-    protected $input;
+    protected $values;
+
+    /**
+     * @var array
+     */
+    protected $errors;
 
     /**
      * Form constructor
      *
-     * @param Input $input
+     * @param array $values
+     * @param array $errors
      */
-    public function __construct(Input $input)
+    public function __construct(array $values = [], array $errors = [])
     {
-        $this->input  = $input;
+        $this->values = $values;
+        $this->errors = $errors;
+    }
+
+    /**
+     * Get values
+     *
+     * @return array
+     */
+    public function values()
+    {
+        return $this->values;
     }
 
     /**
@@ -28,7 +43,7 @@ class Form
      */
     public function errors()
     {
-        return $this->input->errors();
+        return $this->errors;
     }
 
     /**
@@ -67,8 +82,8 @@ class Form
     public function input(string $type, string $name, array $attributes = [])
     {
         $input = ['type' => $type, 'name' => $name];
-        if (!isset($attributes['value']) && $this->input->has($name)) {
-            $input['value'] = $this->input->get($name);
+        if (!isset($attributes['value']) && isset($this->values[$name])) {
+            $input['value'] = $this->values[$name];
         }
 
         return new Element('input', array_merge($input, $attributes));
@@ -85,7 +100,7 @@ class Form
     public function checkbox(string $name, string $value, array $attributes = [])
     {
         $attributes['value'] = $value;
-        if ($this->input->get($name) == $value) {
+        if (isset($this->values[$name]) && $this->values[$name] == $value) {
             $attributes[] = 'checked';
         }
 
@@ -103,7 +118,7 @@ class Form
     public function radio(string $name, string $value, array $attributes = [])
     {
         $attributes['value'] = $value;
-        if ($this->input->get($name) == $value) {
+        if (isset($this->values[$name]) && $this->values[$name] == $value) {
             $attributes[] = 'checked';
         }
 
@@ -332,7 +347,7 @@ class Form
      */
     public function select(string $name, array $options, array $attributes = [])
     {
-        $selected = $this->input->get($name);
+        $selected = $this->values[$name] ?? null;
         array_walk($options, function (&$label, $value) use ($selected) {
             $attributes = $value === $selected ? ['selected'] : [];
 
@@ -379,7 +394,7 @@ class Form
     {
         $attributes = array_merge(['name' => $name], $attributes);
 
-        return new Element('textarea', $attributes, $this->input->get($name) ?? '');
+        return new Element('textarea', $attributes, $this->values[$name] ?? '');
     }
 
     /**
