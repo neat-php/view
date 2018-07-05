@@ -15,16 +15,16 @@ class Element
     protected $attributes;
 
     /**
-     * @var string
+     * @var string|string[]|Element[]
      */
     protected $content;
 
     /**
      * Element constructor
      *
-     * @param string   $name
-     * @param string[] $attributes
-     * @param mixed    $content
+     * @param string                    $name
+     * @param string[]                  $attributes
+     * @param string|string[]|Element[] $content
      */
     public function __construct(string $name, array $attributes = [], $content = null)
     {
