@@ -48,17 +48,6 @@ class Element
     }
 
     /**
-     * Escape content
-     *
-     * @param string $content
-     * @return string
-     */
-    protected function escape($content)
-    {
-        return htmlspecialchars($content, ENT_COMPAT | ENT_HTML5, 'UTF-8');
-    }
-
-    /**
      * Get name
      *
      * @return string
@@ -78,7 +67,7 @@ class Element
         $attributes = $this->attributes;
         array_walk($attributes, function (&$value, $key) {
             if (!is_int($key)) {
-                $value = sprintf(' %s="%s"', $key, $this->escape($value));
+                $value = sprintf(' %s="%s"', $key, htmlspecialchars($value, ENT_COMPAT | ENT_HTML5, 'UTF-8'));
             } else {
                 $value = ' ' . $value;
             }
@@ -109,7 +98,7 @@ class Element
                 return (string) $content;
             }
 
-            return $this->escape($content);
+            return htmlspecialchars($content, ENT_NOQUOTES | ENT_HTML5, 'UTF-8');
         }, (array) $this->content));
     }
 

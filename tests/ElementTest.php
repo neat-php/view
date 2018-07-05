@@ -40,6 +40,6 @@ class ElementTest extends TestCase
     public function testContent()
     {
         $this->assertSame('<div>Hello world!</div>', (string) new Element('div', [], 'Hello world!'));
-        $this->assertSame('<div>&lt;&gt;&quot;&amp;\'</div>', (string) new Element('div', [], '<>"&\''));
+        $this->assertSame('<div>&lt;&gt;&amp;\'"</div>', (string) new Element('div', [], '<>&\'"'));
     }
 }
