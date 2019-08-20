@@ -27,7 +27,7 @@ class FormTest extends TestCase
      */
     public function testFormTags()
     {
-        $form = new Form;
+        $form = new Form();
 
         $this->assertSame('<form>', $form->open());
         $this->assertSame('<form onsubmit="alert(\'hi\');">', $form->open(['onsubmit' => "alert('hi');"]));
@@ -39,7 +39,7 @@ class FormTest extends TestCase
      */
     public function testEmpty()
     {
-        $form = new Form;
+        $form = new Form();
 
         $this->assertSame([], $form->captions());
         $this->assertSame([], $form->values());
@@ -48,6 +48,7 @@ class FormTest extends TestCase
         $this->assertSame('test', $form->caption('test'));
         $this->assertNull($form->value('test'));
         $this->assertNull($form->error('test'));
+        $this->assertNull($form->errorList());
 
         $this->assertElement('<label>test</label>', $form->label('test'));
         $this->assertElement('<input type="checkbox" name="test" value="value">', $form->checkbox('test', 'value'));
@@ -152,10 +153,21 @@ class FormTest extends TestCase
      */
     public function testButton()
     {
-        $form = new Form;
+        $form = new Form();
 
         $this->assertElement('<button type="button">test</button>', $form->button('test'));
         $this->assertElement('<button type="reset">test</button>', $form->reset('test'));
         $this->assertElement('<button type="submit">test</button>', $form->submit('test'));
+    }
+
+    /**
+     * Test errors
+     */
+    public function testErrors()
+    {
+        $form = new Form([], [], ['test' => 'Error!', 'test2' => 'Another error!']);
+        $this->assertSame(['test' => 'Error!'], $form->errors());
+        $this->assertSame('Error!', $form->error('test'));
+        $this->assertElement('<ul><li>Error!</li><li>Another error!</li></ul>', $form->errorList());
     }
 }

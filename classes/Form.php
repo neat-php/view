@@ -97,6 +97,23 @@ class Form
     }
 
     /**
+     * Error list
+     *
+     * @param array $attributes
+     * @return Element|null
+     */
+    public function errorList(array $attributes = [])
+    {
+        if (!$this->errors) {
+            return null;
+        }
+
+        return new Element('ul', $attributes, array_map(function (string $error) {
+            return new Element('li', [], $error);
+        }, $this->errors));
+    }
+
+    /**
      * Open form
      *
      * @param array $attributes
