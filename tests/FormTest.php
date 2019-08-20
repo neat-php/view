@@ -166,7 +166,7 @@ class FormTest extends TestCase
     public function testErrors()
     {
         $form = new Form([], [], ['test' => 'Error!', 'test2' => 'Another error!']);
-        $this->assertSame(['test' => 'Error!'], $form->errors());
+        $this->assertSame(['test' => 'Error!', 'test2' => 'Another error!'], $form->errors());
         $this->assertSame('Error!', $form->error('test'));
         $this->assertElement('<ul><li>Error!</li><li>Another error!</li></ul>', $form->errorList());
     }
