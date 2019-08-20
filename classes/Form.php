@@ -5,45 +5,95 @@ namespace Neat\View;
 class Form
 {
     /**
-     * @var array
+     * @var string[]
+     */
+    protected $captions;
+
+    /**
+     * @var mixed[]
      */
     protected $values;
 
     /**
-     * @var array
+     * @var string[]
      */
     protected $errors;
 
     /**
      * Form constructor
      *
-     * @param array $values
-     * @param array $errors
+     * @param string[] $captions
+     * @param mixed[]  $values
+     * @param string[] $errors
      */
-    public function __construct(array $values = [], array $errors = [])
+    public function __construct(array $captions = [], array $values = [], array $errors = [])
     {
-        $this->values = $values;
-        $this->errors = $errors;
+        $this->captions = $captions;
+        $this->values   = $values;
+        $this->errors   = $errors;
+    }
+
+    /**
+     * Get captions
+     *
+     * @return string[]
+     */
+    public function captions(): array
+    {
+        return $this->captions;
+    }
+
+    /**
+     * Get caption
+     *
+     * @param string $name
+     * @return string Defaults to $name if unknown
+     */
+    public function caption(string $name): string
+    {
+        return $this->captions[$name] ?? $name;
     }
 
     /**
      * Get values
      *
-     * @return array
+     * @return mixed[]
      */
-    public function values()
+    public function values(): array
     {
         return $this->values;
     }
 
     /**
+     * Get value
+     *
+     * @param string $name
+     * @return mixed|null
+     */
+    public function value(string $name)
+    {
+        return $this->values[$name] ?? null;
+    }
+
+    /**
      * Get errors
      *
-     * @return array
+     * @return string[]
      */
-    public function errors()
+    public function errors(): array
     {
         return $this->errors;
+    }
+
+    /**
+     * Get error
+     *
+     * @param string $name
+     * @return string|null
+     */
+    public function error(string $name)
+    {
+        return $this->errors[$name] ?? null;
     }
 
     /**
@@ -52,7 +102,7 @@ class Form
      * @param array $attributes
      * @return string
      */
-    public function open(array $attributes = [])
+    public function open(array $attributes = []): string
     {
         $element = new Element('form', $attributes);
 
@@ -64,11 +114,23 @@ class Form
      *
      * @return string
      */
-    public function close()
+    public function close(): string
     {
         $element = new Element('form');
 
         return $element->close();
+    }
+
+    /**
+     * Label
+     *
+     * @param string $name
+     * @param array  $attributes
+     * @return Element|string
+     */
+    public function label(string $name, array $attributes = []): Element
+    {
+        return new Element('label', $attributes, $this->caption($name));
     }
 
     /**
@@ -79,7 +141,7 @@ class Form
      * @param array  $attributes
      * @return Element|string
      */
-    public function input(string $type, string $name, array $attributes = [])
+    public function input(string $type, string $name, array $attributes = []): Element
     {
         $input = ['type' => $type, 'name' => $name];
         if (!isset($attributes['value']) && isset($this->values[$name]) && !in_array($type, ['file', 'image', 'password'])) {
@@ -97,7 +159,7 @@ class Form
      * @param array  $attributes
      * @return Element|string
      */
-    public function checkbox(string $name, string $value, array $attributes = [])
+    public function checkbox(string $name, string $value, array $attributes = []): Element
     {
         $attributes['value'] = $value;
         if (isset($this->values[$name]) && $this->values[$name] == $value) {
@@ -115,7 +177,7 @@ class Form
      * @param array  $attributes
      * @return Element|string
      */
-    public function radio(string $name, string $value, array $attributes = [])
+    public function radio(string $name, string $value, array $attributes = []): Element
     {
         $attributes['value'] = $value;
         if (isset($this->values[$name]) && $this->values[$name] == $value) {
@@ -132,7 +194,7 @@ class Form
      * @param array  $attributes
      * @return Element|string
      */
-    public function color(string $name, array $attributes = [])
+    public function color(string $name, array $attributes = []): Element
     {
         return $this->input('color', $name, $attributes);
     }
@@ -144,7 +206,7 @@ class Form
      * @param array  $attributes
      * @return Element|string
      */
-    public function date(string $name, array $attributes = [])
+    public function date(string $name, array $attributes = []): Element
     {
         $attributes['pattern'] = '[0-9]{4}-[0-9]{2}-[0-9]{2}';
 
@@ -158,7 +220,7 @@ class Form
      * @param array  $attributes
      * @return Element|string
      */
-    public function datetimeLocal(string $name, array $attributes = [])
+    public function datetimeLocal(string $name, array $attributes = []): Element
     {
         return $this->input('datetime-local', $name, $attributes);
     }
@@ -170,7 +232,7 @@ class Form
      * @param array  $attributes
      * @return Element|string
      */
-    public function email(string $name, array $attributes = [])
+    public function email(string $name, array $attributes = []): Element
     {
         return $this->input('email', $name, $attributes);
     }
@@ -182,7 +244,7 @@ class Form
      * @param array  $attributes
      * @return Element|string
      */
-    public function file(string $name, array $attributes = [])
+    public function file(string $name, array $attributes = []): Element
     {
         return $this->input('file', $name, $attributes);
     }
@@ -194,7 +256,7 @@ class Form
      * @param array  $attributes
      * @return Element|string
      */
-    public function hidden(string $name, array $attributes = [])
+    public function hidden(string $name, array $attributes = []): Element
     {
         return $this->input('hidden', $name, $attributes);
     }
@@ -206,7 +268,7 @@ class Form
      * @param array  $attributes
      * @return Element|string
      */
-    public function image(string $name, array $attributes = [])
+    public function image(string $name, array $attributes = []): Element
     {
         return $this->input('image', $name, $attributes);
     }
@@ -218,7 +280,7 @@ class Form
      * @param array  $attributes
      * @return Element|string
      */
-    public function month(string $name, array $attributes = [])
+    public function month(string $name, array $attributes = []): Element
     {
         $attributes['pattern'] = '[0-9]{4}-[0-9]{2}';
 
@@ -232,7 +294,7 @@ class Form
      * @param array  $attributes
      * @return Element|string
      */
-    public function number(string $name, array $attributes = [])
+    public function number(string $name, array $attributes = []): Element
     {
         return $this->input('number', $name, $attributes);
     }
@@ -244,7 +306,7 @@ class Form
      * @param array  $attributes
      * @return Element|string
      */
-    public function password(string $name, array $attributes = [])
+    public function password(string $name, array $attributes = []): Element
     {
         return $this->input('password', $name, $attributes);
     }
@@ -256,7 +318,7 @@ class Form
      * @param array  $attributes
      * @return Element|string
      */
-    public function range(string $name, array $attributes = [])
+    public function range(string $name, array $attributes = []): Element
     {
         return $this->input('range', $name, $attributes);
     }
@@ -268,7 +330,7 @@ class Form
      * @param array  $attributes
      * @return Element|string
      */
-    public function search(string $name, array $attributes = [])
+    public function search(string $name, array $attributes = []): Element
     {
         return $this->input('search', $name, $attributes);
     }
@@ -280,7 +342,7 @@ class Form
      * @param array  $attributes
      * @return Element|string
      */
-    public function tel(string $name, array $attributes = [])
+    public function tel(string $name, array $attributes = []): Element
     {
         return $this->input('tel', $name, $attributes);
     }
@@ -292,7 +354,7 @@ class Form
      * @param array  $attributes
      * @return Element|string
      */
-    public function text(string $name, array $attributes = [])
+    public function text(string $name, array $attributes = []): Element
     {
         return $this->input('text', $name, $attributes);
     }
@@ -304,7 +366,7 @@ class Form
      * @param array  $attributes
      * @return Element|string
      */
-    public function time(string $name, array $attributes = [])
+    public function time(string $name, array $attributes = []): Element
     {
         $attributes['pattern'] = '[0-9]{2}:[0-9]{2}';
 
@@ -318,7 +380,7 @@ class Form
      * @param array  $attributes
      * @return Element|string
      */
-    public function url(string $name, array $attributes = [])
+    public function url(string $name, array $attributes = []): Element
     {
         return $this->input('url', $name, $attributes);
     }
@@ -330,7 +392,7 @@ class Form
      * @param array  $attributes
      * @return Element|string
      */
-    public function week(string $name, array $attributes = [])
+    public function week(string $name, array $attributes = []): Element
     {
         $attributes['pattern'] = '[0-9]{4}-W[0-9]{2}';
 
@@ -345,7 +407,7 @@ class Form
      * @param array  $attributes
      * @return Element|string
      */
-    public function select(string $name, array $options, array $attributes = [])
+    public function select(string $name, array $options, array $attributes = []): Element
     {
         $selected = $this->values[$name] ?? null;
         array_walk($options, function (&$label, $value) use ($selected) {
@@ -374,7 +436,7 @@ class Form
      * @param array  $attributes
      * @return Element|string
      */
-    public function option(string $label = null, string $value = null, array $attributes = [])
+    public function option(string $label = null, string $value = null, array $attributes = []): Element
     {
         if ($value !== null) {
             $attributes = array_merge(['value' => $value], $attributes);
@@ -390,7 +452,7 @@ class Form
      * @param array  $attributes
      * @return Element|string
      */
-    public function textarea(string $name, array $attributes = [])
+    public function textarea(string $name, array $attributes = []): Element
     {
         $attributes = array_merge(['name' => $name], $attributes);
 
@@ -404,7 +466,7 @@ class Form
      * @param array  $attributes
      * @return Element|string
      */
-    public function button(string $label, array $attributes = [])
+    public function button(string $label, array $attributes = []): Element
     {
         $attributes['type'] = 'button';
 
@@ -418,7 +480,7 @@ class Form
      * @param array  $attributes
      * @return Element|string
      */
-    public function reset(string $label, array $attributes = [])
+    public function reset(string $label, array $attributes = []): Element
     {
         $attributes['type'] = 'reset';
 
@@ -432,7 +494,7 @@ class Form
      * @param array  $attributes
      * @return Element|string
      */
-    public function submit(string $label, array $attributes = [])
+    public function submit(string $label, array $attributes = []): Element
     {
         $attributes['type'] = 'submit';
 

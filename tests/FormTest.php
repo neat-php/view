@@ -1,5 +1,7 @@
 <?php
 
+/** @noinspection HtmlRequiredAltAttribute */
+
 namespace Neat\View\Test;
 
 use Neat\View\Element;
@@ -33,14 +35,21 @@ class FormTest extends TestCase
     }
 
     /**
-     * Test form elements without values
+     * Test form elements without captions, values and errors
      */
     public function testEmpty()
     {
         $form = new Form;
 
+        $this->assertSame([], $form->captions());
         $this->assertSame([], $form->values());
+        $this->assertSame([], $form->errors());
 
+        $this->assertSame('test', $form->caption('test'));
+        $this->assertNull($form->value('test'));
+        $this->assertNull($form->error('test'));
+
+        $this->assertElement('<label>test</label>', $form->label('test'));
         $this->assertElement('<input type="checkbox" name="test" value="value">', $form->checkbox('test', 'value'));
         $this->assertElement('<input type="radio" name="test" value="value">', $form->radio('test', 'value'));
         $this->assertElement('<input type="color" name="test">', $form->color('test'));
@@ -63,6 +72,18 @@ class FormTest extends TestCase
         $this->assertElement('<select name="test"><option value="1">first</option><option value="2">second</option></select>',
             $form->select('test', [1 => 'first', 2 => 'second']));
         $this->assertElement('<textarea name="test"></textarea>', $form->textarea('test'));
+    }
+
+    /**
+     * Test form captions
+     */
+    public function testCaptions()
+    {
+        $form = new Form(['test' => 'Test field']);
+
+        $this->assertSame(['test' => 'Test field'], $form->captions());
+        $this->assertSame('Test field', $form->caption('test'));
+        $this->assertElement('<label>Test field</label>', $form->label('test'));
     }
 
     /**
@@ -90,7 +111,7 @@ class FormTest extends TestCase
             'select'         => 2,
         ];
 
-        $form = new Form($values);
+        $form = new Form([], $values);
 
         $this->assertSame($values, $form->values());
 
