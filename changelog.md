@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Multi select input.
 
+### Fixed
+- Return type-hint doc-blocks.
+
 ## [0.1.1] - 2019-12-30
 ### Added
 - View model interface (return recognizable view models from your controllers).

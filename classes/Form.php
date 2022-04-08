@@ -143,7 +143,7 @@ class Form
      *
      * @param string $name
      * @param array  $attributes
-     * @return Element|string
+     * @return Element
      */
     public function label(string $name, array $attributes = []): Element
     {
@@ -156,7 +156,7 @@ class Form
      * @param string $type
      * @param string $name
      * @param array  $attributes
-     * @return Element|string
+     * @return Element
      */
     public function input(string $type, string $name, array $attributes = []): Element
     {
@@ -174,7 +174,7 @@ class Form
      * @param string $name
      * @param string $value
      * @param array  $attributes
-     * @return Element|string
+     * @return Element
      */
     public function checkbox(string $name, string $value, array $attributes = []): Element
     {
@@ -192,7 +192,7 @@ class Form
      * @param string $name
      * @param string $value
      * @param array  $attributes
-     * @return Element|string
+     * @return Element
      */
     public function radio(string $name, string $value, array $attributes = []): Element
     {
@@ -209,7 +209,7 @@ class Form
      *
      * @param string $name
      * @param array  $attributes
-     * @return Element|string
+     * @return Element
      */
     public function color(string $name, array $attributes = []): Element
     {
@@ -221,7 +221,7 @@ class Form
      *
      * @param string $name
      * @param array  $attributes
-     * @return Element|string
+     * @return Element
      */
     public function date(string $name, array $attributes = []): Element
     {
@@ -235,7 +235,7 @@ class Form
      *
      * @param string $name
      * @param array  $attributes
-     * @return Element|string
+     * @return Element
      */
     public function datetimeLocal(string $name, array $attributes = []): Element
     {
@@ -247,7 +247,7 @@ class Form
      *
      * @param string $name
      * @param array  $attributes
-     * @return Element|string
+     * @return Element
      */
     public function email(string $name, array $attributes = []): Element
     {
@@ -259,7 +259,7 @@ class Form
      *
      * @param string $name
      * @param array  $attributes
-     * @return Element|string
+     * @return Element
      */
     public function file(string $name, array $attributes = []): Element
     {
@@ -271,7 +271,7 @@ class Form
      *
      * @param string $name
      * @param array  $attributes
-     * @return Element|string
+     * @return Element
      */
     public function hidden(string $name, array $attributes = []): Element
     {
@@ -283,7 +283,7 @@ class Form
      *
      * @param string $name
      * @param array  $attributes
-     * @return Element|string
+     * @return Element
      */
     public function image(string $name, array $attributes = []): Element
     {
@@ -295,7 +295,7 @@ class Form
      *
      * @param string $name
      * @param array  $attributes
-     * @return Element|string
+     * @return Element
      */
     public function month(string $name, array $attributes = []): Element
     {
@@ -309,7 +309,7 @@ class Form
      *
      * @param string $name
      * @param array  $attributes
-     * @return Element|string
+     * @return Element
      */
     public function number(string $name, array $attributes = []): Element
     {
@@ -321,7 +321,7 @@ class Form
      *
      * @param string $name
      * @param array  $attributes
-     * @return Element|string
+     * @return Element
      */
     public function password(string $name, array $attributes = []): Element
     {
@@ -333,7 +333,7 @@ class Form
      *
      * @param string $name
      * @param array  $attributes
-     * @return Element|string
+     * @return Element
      */
     public function range(string $name, array $attributes = []): Element
     {
@@ -345,7 +345,7 @@ class Form
      *
      * @param string $name
      * @param array  $attributes
-     * @return Element|string
+     * @return Element
      */
     public function search(string $name, array $attributes = []): Element
     {
@@ -357,7 +357,7 @@ class Form
      *
      * @param string $name
      * @param array  $attributes
-     * @return Element|string
+     * @return Element
      */
     public function tel(string $name, array $attributes = []): Element
     {
@@ -369,7 +369,7 @@ class Form
      *
      * @param string $name
      * @param array  $attributes
-     * @return Element|string
+     * @return Element
      */
     public function text(string $name, array $attributes = []): Element
     {
@@ -381,7 +381,7 @@ class Form
      *
      * @param string $name
      * @param array  $attributes
-     * @return Element|string
+     * @return Element
      */
     public function time(string $name, array $attributes = []): Element
     {
@@ -395,7 +395,7 @@ class Form
      *
      * @param string $name
      * @param array  $attributes
-     * @return Element|string
+     * @return Element
      */
     public function url(string $name, array $attributes = []): Element
     {
@@ -407,7 +407,7 @@ class Form
      *
      * @param string $name
      * @param array  $attributes
-     * @return Element|string
+     * @return Element
      */
     public function week(string $name, array $attributes = []): Element
     {
@@ -422,7 +422,7 @@ class Form
      * @param string $name
      * @param array  $options
      * @param array  $attributes
-     * @return Element|string
+     * @return Element
      */
     public function select(string $name, array $options, array $attributes = []): Element
     {
@@ -451,7 +451,7 @@ class Form
      * @param string $name
      * @param array  $options
      * @param array  $attributes
-     * @return Element|string
+     * @return Element
      */
     public function multiSelect(string $name, array $options, array $attributes = []): Element
     {
@@ -483,7 +483,7 @@ class Form
      * @param string $label
      * @param string $value
      * @param array  $attributes
-     * @return Element|string
+     * @return Element
      */
     public function option(string $label = null, string $value = null, array $attributes = []): Element
     {
@@ -499,7 +499,7 @@ class Form
      *
      * @param string $name
      * @param array  $attributes
-     * @return Element|string
+     * @return Element
      */
     public function textarea(string $name, array $attributes = []): Element
     {
@@ -513,7 +513,7 @@ class Form
      *
      * @param string $label
      * @param array  $attributes
-     * @return Element|string
+     * @return Element
      */
     public function button(string $label, array $attributes = []): Element
     {
@@ -527,7 +527,7 @@ class Form
      *
      * @param string $label
      * @param array  $attributes
-     * @return Element|string
+     * @return Element
      */
     public function reset(string $label, array $attributes = []): Element
     {
@@ -541,7 +541,7 @@ class Form
      *
      * @param string $label
      * @param array  $attributes
-     * @return Element|string
+     * @return Element
      */
     public function submit(string $label, array $attributes = []): Element
     {
