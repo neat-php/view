@@ -446,6 +446,38 @@ class Form
     }
 
     /**
+     * Multi select input
+     *
+     * @param string $name
+     * @param array  $options
+     * @param array  $attributes
+     * @return Element|string
+     */
+    public function multiSelect(string $name, array $options, array $attributes = []): Element
+    {
+        $selected = $this->values[$name] ?? [];
+        array_walk($options, function (&$label, $value) use ($selected) {
+            $attributes = in_array($value, $selected, true) ? ['selected'] : [];
+
+            $label = $this->option($label, $value, $attributes);
+        });
+        if (!in_array('multiple', $attributes)) {
+            $attributes[] ='multiple';
+        }
+        if (isset($attributes['placeholder'])) {
+            array_unshift($options, $this->option($attributes['placeholder'], null, array_merge(
+                $selected === [] ? ['selected'] : [],
+                ['disabled', 'value', 'style' => 'display: none;']
+            )));
+            unset($attributes['placeholder']);
+        }
+
+        $attributes = array_merge(['name' => $name], $attributes);
+
+        return new Element('select', $attributes, $options);
+    }
+
+    /**
      * Option
      *
      * @param string $label

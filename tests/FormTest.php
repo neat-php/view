@@ -78,6 +78,14 @@ class FormTest extends TestCase
             '<select name="test"><option selected disabled value style="display: none;">Choose...</option><option value="x">y</option></select>',
             $form->select('test', ['x' => 'y'], ['placeholder' => 'Choose...'])
         );
+        $this->assertElement(
+            '<select name="test" multiple><option value="1">first</option><option value="2">second</option></select>',
+            $form->multiSelect('test', [1 => 'first', 2 => 'second'])
+        );
+        $this->assertElement(
+            '<select name="test" multiple><option selected disabled value style="display: none;">Choose...</option><option value="x">y</option></select>',
+            $form->multiSelect('test', ['x' => 'y'], ['placeholder' => 'Choose...'])
+        );
         $this->assertElement('<textarea name="test"></textarea>', $form->textarea('test'));
     }
 
