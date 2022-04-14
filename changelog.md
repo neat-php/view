@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.3] - 2022-04-14
+### Changed
+- Form, replace error :field placeholder with caption.
+
 ## [0.1.2] - 2022-04-08
 ### Added
 - Multi select input.
