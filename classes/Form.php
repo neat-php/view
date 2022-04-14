@@ -30,7 +30,9 @@ class Form
     {
         $this->captions = $captions;
         $this->values   = $values;
-        $this->errors   = $errors;
+        $this->errors   = array_map(function (string $field, string $error) {
+            return str_replace(':field', $this->caption($field), $error);
+        }, array_keys($errors), array_values($errors));
     }
 
     /**
