@@ -98,6 +98,7 @@ class FormTest extends TestCase
 
         $this->assertSame(['test' => 'Test field'], $form->captions());
         $this->assertSame('Test field', $form->caption('test'));
+        $this->assertSame('test2', $form->caption('test2'));
         $this->assertElement('<label>Test field</label>', $form->label('test'));
     }
 
@@ -177,5 +178,14 @@ class FormTest extends TestCase
         $this->assertSame(['test' => 'Error!', 'test2' => 'Another error!'], $form->errors());
         $this->assertSame('Error!', $form->error('test'));
         $this->assertElement('<ul><li>Error!</li><li>Another error!</li></ul>', $form->errorList());
+    }
+
+    public function testErrorsWithCaptions()
+    {
+        $form = new Form(['test' => 'caption1'], [], ['test' => 'Error :field!', 'test2' => 'Another error :field!']);
+        $this->assertSame(['test' => 'Error caption1!', 'test2' => 'Another error :field!'], $form->errors());
+        $this->assertSame('Error caption1!', $form->error('test'));
+        $this->assertSame('Another error :field!', $form->error('test2'));
+        $this->assertElement('<ul><li>Error caption1!</li><li>Another error :field!</li></ul>', $form->errorList());
     }
 }

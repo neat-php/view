@@ -29,10 +29,13 @@ class Form
     public function __construct(array $captions = [], array $values = [], array $errors = [])
     {
         $this->captions = $captions;
-        $this->values   = $values;
-        $this->errors   = array_map(function (string $field, string $error) {
-            return str_replace(':field', $this->caption($field), $error);
-        }, array_keys($errors), array_values($errors));
+        $this->values = $values;
+
+        $errorKeys = array_keys($errors);
+        $errorDescriptions = array_map(function (string $field, string $error) {
+            return str_replace(':field', $this->captions[$field] ?? ':field', $error);
+        }, $errorKeys, $errors);
+        $this->errors = array_combine($errorKeys, $errorDescriptions);
     }
 
     /**
