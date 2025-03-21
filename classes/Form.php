@@ -485,12 +485,12 @@ class Form
     /**
      * Option
      *
-     * @param string $label
-     * @param string $value
-     * @param array  $attributes
+     * @param string|null $label
+     * @param string|null $value
+     * @param array $attributes
      * @return Element
      */
-    public function option(string $label = null, string $value = null, array $attributes = []): Element
+    public function option(?string $label = null, ?string $value = null, array $attributes = []): Element
     {
         if ($value !== null) {
             $attributes = array_merge(['value' => $value], $attributes);
